@@ -110,7 +110,7 @@ async def handleBuyCallback(message: types.message):
     user_ref = fireRepo.client.collection(u'users').document(f"{message.from_user.id}")
     user = user_ref.get()
     if user.exists:
-        goods = fireRepo.getGoods(fireRepo.client)
+        goods = fireRepo.getGoods()
         global index
         await bot.send_photo(photo=goods[index]['photo'], reply_markup=slider_kb,
                              chat_id=message.from_user.id,
@@ -128,7 +128,7 @@ async def handleBuyCallback(message: types.message):
 async def handleNext(message=types.message):
     user_ref = fireRepo.client.collection(u'users').document(f'{message.from_user.id}')
     user = user_ref.get()
-    goods = fireRepo.getGoods(fireRepo.client)
+    goods = fireRepo.getGoods()
     ### slider
     global index
     if index == len(goods) - 1:
@@ -155,11 +155,11 @@ async def handleNext(message=types.message):
 async def handlePrev(message=types.message):
     user_ref = fireRepo.client.collection(u'users').document(f'{message.from_user.id}')
     user = user_ref.get()
-    goods = fireRepo.getGoods(fireRepo.client)
+    goods = fireRepo.getGoods()
     ### slider
     global index
     if index == 0:
-        index = len(goods) -1
+        index = len(goods) - 1
     else:
         index -= 1
     ###
@@ -180,7 +180,7 @@ async def handlePrev(message=types.message):
 ### handling connect button callback
 @dp.callback_query_handler(lambda callback: callback.data == "connect")
 async def connectHandler(message=types.Message):
-    goods = fireRepo.getGoods(fireRepo.client)
+    goods = fireRepo.getGoods()
     global index
     userToConnect_ref = fireRepo.client.collection(u'users').document(f"{goods[index]['sentby']}")
     userToConnect_snap = userToConnect_ref.get()

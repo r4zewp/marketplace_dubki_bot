@@ -49,4 +49,4 @@ async def upload(stateRes, uid):
         "photo": stateRes['photo'],
         'sentby': uid,
     }
-    fireRepo.addGood(good=resReady, client=fireRepo.client)
+    fireRepo.addGood(good=resReady)
